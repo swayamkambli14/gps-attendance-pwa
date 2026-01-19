@@ -16,7 +16,7 @@ function startWorkerTracking() {
 async function checkGeofence(lat, lng) {
   const siteLat = 28.6139;
   const siteLng = 77.2090;
-  const radius = 3;
+  const radius = 1;
 
   const distance = getDistance(lat, lng, siteLat, siteLng);
 
