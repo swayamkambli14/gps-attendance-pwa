@@ -1,19 +1,20 @@
-function showWorkerUI() {
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("workerView").style.display = "block";
-  startWorkerTracking();
-}
+import { loginAsWorker, loginAsEngineer } from "./auth.js";
+import { startTracking } from "./gps.js";
 
-function showEngineerUI() {
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("engineerView").style.display = "block";
-  loadEngineerDashboard();
-}
+const loginView = document.getElementById("loginView");
+const workerView = document.getElementById("workerView");
+const engineerView = document.getElementById("engineerView");
 
-document.getElementById("workerLogin").addEventListener("click", function () {
+document.getElementById("workerLogin").onclick = () => {
   loginAsWorker();
-});
+  loginView.style.display = "none";
+  workerView.style.display = "block";
+  startTracking();
+};
 
-document.getElementById("engineerLogin").addEventListener("click", function () {
+document.getElementById("engineerLogin").onclick = () => {
   loginAsEngineer();
-});
+  loginView.style.display = "none";
+  engineerView.style.display = "block";
+  startTracking();
+};

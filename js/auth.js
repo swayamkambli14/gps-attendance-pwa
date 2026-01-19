@@ -1,26 +1,17 @@
-let currentUser = null;
+export let currentUser = null;
 
-async function loginAsWorker() {
+export function loginAsWorker() {
   currentUser = {
-    uid: "worker1",
-    role: "worker",
-    name: "Ramesh Kumar",
-    contact: "9876543210",
-    siteId: "site1"
+    uid: "worker_1",
+    name: "Ramesh",
+    role: "worker"
   };
-
-  await db.users.put(currentUser);
-  showWorkerUI();
 }
 
-async function loginAsEngineer() {
+export function loginAsEngineer() {
   currentUser = {
-    uid: "engineer1",
-    role: "engineer",
-    name: "Amit Sharma",
-    siteId: "site1"
+    uid: "engineer_1",
+    name: "Site Engineer",
+    role: "engineer"
   };
-
-  await db.users.put(currentUser);
-  showEngineerUI();
 }

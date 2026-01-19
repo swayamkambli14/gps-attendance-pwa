@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GPS Attendance PWA</title>
-  <link rel="manifest" href="manifest.json">
+  <title>GPS Attendance</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-  <h2>GPS Attendance System</h2>
 
-  <!-- Login -->
-  <div id="loginBox">
-    <button id="workerLogin">Login as Worker</button>
-    <button id="engineerLogin">Login as Engineer</button>
-  </div>
+<h2>GPS Attendance System</h2>
 
-  <!-- Worker View -->
-  <div id="workerView" style="display:none;">
-    <p>GPS tracking active</p>
-  </div>
+<!-- Login -->
+<div id="loginView">
+  <button id="workerLogin">Login as Worker</button>
+  <button id="engineerLogin">Login as Engineer</button>
+</div>
 
-  <!-- Engineer View -->
-  <div id="engineerView" style="display:none;">
-    <h3>Workers Inside Site</h3>
-    <div id="workerList"></div>
-  </div>
+<!-- Worker View -->
+<div id="workerView" style="display:none">
+  <h3>Worker Panel</h3>
+  <p id="workerStatus">Checking location...</p>
+</div>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/dexie@3/dist/dexie.js"></script>
+<!-- Engineer View -->
+<div id="engineerView" style="display:none">
+  <h3>Engineer Dashboard</h3>
+  <ul id="workersList"></ul>
+</div>
 
-  <script src="js/db.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/gps.js"></script>
-  <script src="js/worker.js"></script>
-  <script src="js/engineer.js"></script>
-  <script src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>

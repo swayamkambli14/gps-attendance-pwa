@@ -1,36 +1,17 @@
-async function loadEngineerDashboard() {
-  const list = document.getElementById("workerList");
+import { db } from "./db.js";
+import { currentUser } from "./auth.js";
+
+export async function renderEngineerDashboard() {
+  if (!currentUser || currentUser.role !== "engineer") return;
+
+  const list = document.getElementById("workersList");
+  const workers = await db.livePresence.toArray();
+
   list.innerHTML = "";
 
-  const entries = await db.livePresence.toArray();
-
-  for (let entry of entries) {
-    const worker = await db.users.get(entry.workerId);
-
-    const div = document.createElement("div");
-    div.innerHTML = `
-      ${worker.name} (${worker.contact})
-      <button data-id="${worker.uid}">Verify</button>
-    `;
-
-    list.appendChild(div);
-  }
-
-  const buttons = document.querySelectorAll("#workerList button");
-  buttons.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      verifyWorker(btn.getAttribute("data-id"));
-    });
+  workers.forEach(worker => {
+    const li = document.createElement("li");
+    li.textContent = worker.name;
+    list.appendChild(li);
   });
-}
-
-async function verifyWorker(workerId) {
-  await db.verifiedAttendance.add({
-    workerId: workerId,
-    engineerId: currentUser.uid,
-    timestamp: new Date().toISOString()
-  });
-
-  await db.livePresence.delete(workerId);
-  loadEngineerDashboard();
 }
