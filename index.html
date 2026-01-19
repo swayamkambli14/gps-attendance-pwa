@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GPS Attendance PWA</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <h2>GPS Attendance System</h2>
+
+  <!-- Login -->
+  <div id="loginBox">
+    <button id="workerLogin">Login as Worker</button>
+    <button id="engineerLogin">Login as Engineer</button>
+  </div>
+
+  <!-- Worker View -->
+  <div id="workerView" style="display:none;">
+    <p>GPS tracking active</p>
+  </div>
+
+  <!-- Engineer View -->
+  <div id="engineerView" style="display:none;">
+    <h3>Workers Inside Site</h3>
+    <div id="workerList"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/dexie@3/dist/dexie.js"></script>
+
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/gps.js"></script>
+  <script src="js/worker.js"></script>
+  <script src="js/engineer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
