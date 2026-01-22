@@ -1,14 +1,9 @@
-import { db } from "./db.js";
-import { currentUser } from "./auth.js";
-import { updateWorkerUI } from "./worker.js";
-import { renderEngineerDashboard } from "./engineer.js";
+const SITE_LAT = 28.6139;     // change to your site latitude
+const SITE_LON = 77.209;    // change to your site longitude
+const RADIUS = 5;          // meters
 
-const SITE_LAT = 28.6139;
-const SITE_LNG = 77.2090;
-const RADIUS = 2;
-
-function getDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371000;
+export function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371000; // Earth radius in meters
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
 
@@ -21,31 +16,14 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
 }
 
-export function startTracking() {
-  navigator.geolocation.watchPosition(
-    async (pos) => {
-      if (!currentUser) return;
-
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-      const distance = getDistance(lat, lng, SITE_LAT, SITE_LNG);
-
-      if (distance <= RADIUS && currentUser.role === "worker") {
-        await db.livePresence.put({
-          uid: currentUser.uid,
-          name: currentUser.name
-        });
-        updateWorkerUI(true);
-      }
-
-      if (distance > RADIUS && currentUser.role === "worker") {
-        await db.livePresence.delete(currentUser.uid);
-        updateWorkerUI(false);
-      }
-
-      renderEngineerDashboard();
+export function checkGeofence(callback) {
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude, longitude } = pos.coords;
+      const distance = getDistance(latitude, longitude, SITE_LAT, SITE_LON);
+      callback(distance <= RADIUS);
     },
-    err => console.error(err),
+    () => alert("Location permission required"),
     { enableHighAccuracy: true }
   );
 }

@@ -1,11 +1,20 @@
-export function updateWorkerUI(isInside) {
-  const status = document.getElementById("workerStatus");
+import { checkGeofence } from "./gps.js";
 
-  if (isInside) {
-    status.textContent = "Registered successfully ✅";
-    status.style.color = "green";
-  } else {
-    status.textContent = "Beyond geofence ❌";
-    status.style.color = "red";
-  }
+export function startWorkerAttendance() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  if (!user) return;
+
+  const statusEl = document.getElementById("workerStatus");
+
+  checkGeofence(isInside => {
+    if (isInside) {
+      statusEl.innerText = "Registered Successfully";
+
+      // ✅ THIS is what engineer dashboard reads
+      localStorage.setItem("workerPresent", user.name);
+    } else {
+      statusEl.innerText = "Beyond Geofence";
+      localStorage.removeItem("workerPresent");
+    }
+  });
 }

@@ -1,17 +1,20 @@
-import { db } from "./db.js";
-import { currentUser } from "./auth.js";
+export function loadEngineerPanel() {
+  const list = document.getElementById("workerList");
 
-export async function renderEngineerDashboard() {
-  if (!currentUser || currentUser.role !== "engineer") return;
+  function refreshList() {
+    list.innerHTML = "";
 
-  const list = document.getElementById("workersList");
-  const workers = await db.livePresence.toArray();
+    const workerName = localStorage.getItem("workerPresent");
+    if (workerName) {
+      const li = document.createElement("li");
+      li.innerText = workerName;
+      list.appendChild(li);
+    }
+  }
 
-  list.innerHTML = "";
+  // Initial load
+  refreshList();
 
-  workers.forEach(worker => {
-    const li = document.createElement("li");
-    li.textContent = worker.name;
-    list.appendChild(li);
-  });
+  // 🔁 Auto-refresh every 2 seconds
+  setInterval(refreshList, 2000);
 }

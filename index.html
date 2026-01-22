@@ -8,24 +8,39 @@
 
 <h2>GPS Attendance System</h2>
 
-<!-- Login -->
-<div id="loginView">
-  <button id="workerLogin">Login as Worker</button>
-  <button id="engineerLogin">Login as Engineer</button>
+<!-- WORKER SIGNUP -->
+<div id="signupView">
+  <h3>Worker Signup</h3>
+  <input id="suName" placeholder="Name">
+  <input id="suEmail" placeholder="Email">
+  <input id="suPassword" type="password" placeholder="Password">
+  <button id="signupBtn">Signup</button>
 </div>
 
-<!-- Worker View -->
+<!-- LOGIN -->
+<div id="loginView">
+  <h3>Login</h3>
+  <input id="liEmail" placeholder="Email">
+  <input id="liPassword" type="password" placeholder="Password">
+  <select id="roleSelect">
+    <option value="worker">Worker</option>
+    <option value="engineer">Engineer</option>
+  </select>
+  <button id="loginBtn">Login</button>
+</div>
+
+<!-- WORKER DASHBOARD -->
 <div id="workerView" style="display:none">
   <h3>Worker Panel</h3>
   <p id="workerStatus">Checking location...</p>
 </div>
 
-<!-- Engineer View -->
+<!-- ENGINEER DASHBOARD -->
 <div id="engineerView" style="display:none">
   <h3>Engineer Dashboard</h3>
-  <ul id="workersList"></ul>
+  <!-- ✅ FIXED ID -->
+  <ul id="workerList"></ul>
 </div>
-<!-- force redeploy -->
 
 <script type="module" src="js/app.js"></script>
 </body>
